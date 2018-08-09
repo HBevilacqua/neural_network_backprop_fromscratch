@@ -2,7 +2,7 @@ from random import seed
 from random import randrange
 from random import random
 from csv import reader
-from math import exp
+from math import exp,tanh
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -15,18 +15,6 @@ def initialize_network(n_inputs, n_hidden, n_outputs):
         #Create dictionary to store WEIGHTS as: [{'weights': [x x x] }, {...}, {'weights': [x x x]}]
 	hidden_layer = [{'weights':[random() for i in range(n_inputs + 1)]} for i in range(n_hidden)]
         network.append(hidden_layer)
-        """
-        hidden_layer = []
-        for i in range(0,n_hidden):
-            randomWeight = []
-            for j in range(0,n_inputs + 1):
-                randomWeight.append(random())
-            #Create dictionnary
-            temp = {'weights':randomWeight}
-            hidden_layer.append(temp)
-        print("hidden_layer_test",hidden_layer)
-        network.append(hidden_layer)
-        """
 	output_layer = [{'weights':[random() for i in range(n_hidden + 1)]} for i in range(n_outputs)]
 	network.append(output_layer)
         ####print("")
@@ -77,15 +65,27 @@ def activate(weights, inputs):
 		activation += weights[i] * inputs[i]
 	return activation
 
-# Transfer neuron activation: sigmoid activation function
-def transfer(activation):
-	return 1.0 / (1.0 + exp(-activation))
+# Transfer neuron activation: sigmoid function or sigmoid' according to derivate arg
+def transfer_sigmoid(x, derivate):
+    if derivate == 0:
+        # x = activation
+	return 1.0 / (1.0 + exp(-x))
+    else:
+        # x = neuron outputs, calculate the derivative of an neuron output
+        return x * (1.0 - x)
+
+# Transfer neuron activation: tanh function or tanh' according to derivate arg
+def transfer_tanh(x, derivate):
+    if derivate == 0:
+        return tanh(x)
+    else:
+        return 1.0 - tanh(x)**2
 
 # Forward propagate input to a network output, row is the row of the dataset array
 # input:	(network)Our neural network
 # input:	(row)The dataset to train our network (1 train pattern)
 # return	the outputs from the last layer also called the output layer.
-def forward_propagate(network, row):
+def forward_propagate(network, row, transfer):
         #first input is set by the dataset array
 	inputs = row
 	for layer in network:
@@ -94,21 +94,17 @@ def forward_propagate(network, row):
 		for neuron in layer:
 			activation = activate(neuron['weights'], inputs)
                         #Add the neuron output into the neuron item (before 'weight')
-			neuron['output'] = transfer(activation)
+			neuron['output'] = transfer(activation, 0)
 			new_inputs.append(neuron['output'])
 		inputs = new_inputs
         #returns the outputs from the last layer
 	return inputs
 
-# Calculate the derivative of an neuron output
-def transfer_derivative(output):
-	return output * (1.0 - output)
-
 # Backpropagate error and store in neurons
 # Error signal calculated for each neuron is stored with the name delta
 # input		(network)Our neural network
 # input		(exptected)Expected output of our network
-def backward_propagate_error(network, expected):
+def backward_propagate_error(network, expected, transfer):
         #Start from last layer
 	for idx_layer in reversed(range(len(network))):
 		layer = network[idx_layer]
@@ -131,7 +127,7 @@ def backward_propagate_error(network, expected):
                 # --- (B) Store the error signal in delta for each neuron
 		for idx_neuron in range(len(layer)):
 			neuron = layer[idx_neuron]
-			neuron['delta'] = errors[idx_neuron] * transfer_derivative(neuron['output'])
+			neuron['delta'] = errors[idx_neuron] * transfer(neuron['output'], 1)
 
 # Update network weights with error: weight += (learning_rate * error * input)
 # Note: forward and backward propagations must be already done.
@@ -160,20 +156,20 @@ def update_weights(network, row, l_rate):
 #			For example, a value of 0.1 will update the weight 10% of the amount that it possibly could be updated.
 # input:	(n_epoch)Within each epoch, update the network for each row in the training dataset
 # input:	(n_outputs)Expected of output values
-def train_network(network, train, l_rate, n_epoch, n_outputs):
+def train_network(network, train, l_rate, n_epoch, n_outputs, transfer):
         error=[]
 	for epoch in range(n_epoch):
 		sum_error = 0
                 # Apply for each row of the dataset the backprop 
 		for row in train:
-			outputs = forward_propagate(network, row)
+			outputs = forward_propagate(network, row, transfer)
                         # expected = one-hot encoding, 1 class (1 binary) for 1 input
                         # if 2 classes (2 integer out values), expected = [0, 1] and = [1, 0]
                         # write '1' at the index given by the integer output (if output = 2, set at the index 2: [0,0,1] )
 			expected = [0 for i in range(n_outputs)]
 			expected[row[-1]] = 1
 			sum_error += sum([(expected[i]-outputs[i])**2 for i in range(len(expected))])
-			backward_propagate_error(network, expected)
+			backward_propagate_error(network, expected, transfer)
 			update_weights(network, row, l_rate)
                 error.append(sum_error)
 		####print("")
@@ -187,8 +183,8 @@ def train_network(network, train, l_rate, n_epoch, n_outputs):
         ####plt.show()
 
 # Make a prediction with a network
-def predict(network, row):
-	outputs = forward_propagate(network, row)
+def predict(network, row, transfer):
+	outputs = forward_propagate(network, row, transfer)
         #return the index with max value for each output (ex: output[i]=[0.1, 0.9, 0.2], prediciont[i] = 1)
 	return outputs.index(max(outputs))
 
@@ -198,7 +194,7 @@ def predict(network, row):
 # input:	(l_rate)
 # input:	(n_epoch)
 # input:	(n_hidden)
-def back_propagation(train, test, l_rate, n_epoch, n_hidden):
+def back_propagation(train, test, l_rate, n_epoch, n_hidden, transfer):
 	n_inputs = len(train[0]) - 1
 	n_outputs = len(set([row[-1] for row in train]))
 	#network = initialize_network(n_inputs, n_hidden, n_outputs)
@@ -207,11 +203,11 @@ def back_propagation(train, test, l_rate, n_epoch, n_hidden):
         for i in range(len(network)):
             layerPrint.append(len(network[i]))
         print('network created: %d layer(s):' % len(network), layerPrint)
-	train_network(network, train, l_rate, n_epoch, n_outputs)
+	train_network(network, train, l_rate, n_epoch, n_outputs, transfer)
 	predictions = list()
-        print ("perform prediction on %d set of inputs (1 fold):" % len(test))
+        print ("perform predictions on %d set of inputs:" % len(test))
 	for row in test:
-		prediction = predict(network, row)
+		prediction = predict(network, row, transfer)
 		predictions.append(prediction)
         print("pred =", predictions)
 	return(predictions)
@@ -329,7 +325,7 @@ n_outputs = len(set([row[-1] for row in dataset]))
 #network = initialize_network(n_inputs, 2, n_outputs)
 network = initialize_network_custom([n_inputs,2,n_outputs])
 
-train_network(network, dataset, 0.5, 20, n_outputs)
+train_network(network, dataset, 0.5, 20, n_outputs, transfer_sigmoid)
 for layer in network:
 	print(layer)
         print("")
@@ -352,10 +348,9 @@ dataset = [[2.7810836,2.550537003,	0],    # Classe 0
 
 network = [[{'weights': [-1.482313569067226, 1.8308790073202204, 1.078381922048799]}, {'weights': [0.23244990332399884, 0.3621998343835864, 0.40289821191094327]}],	[{'weights': [2.5001872433501404, 0.7887233511355132, -1.1026649757805829]}, {'weights': [-2.429350576245497, 0.8357651039198697, 1.0699217181280656]}]]
 for row in dataset:
-	prediction = predict(network, row)
+	prediction = predict(network, row, transfer_sigmoid)
 	print('Expected=%d, Got=%d' % (row[-1], prediction))
 """
-
 """ 
     SW3 - Test Backprop on Seeds dataset
 """
@@ -379,8 +374,7 @@ l_rate = 0.3
 n_epoch = 500
 n_hidden = 5
 print('---------------------------------------')
-scores = evaluate_algorithm(dataset, back_propagation, n_folds, l_rate, n_epoch, n_hidden)
+scores = evaluate_algorithm(dataset, back_propagation, n_folds, l_rate, n_epoch, n_hidden, transfer_sigmoid)
 print('Scores (per fold): %s' % scores)
 print('Mean Accuracy: %.3f%%' % (sum(scores)/float(len(scores))))
-
 
