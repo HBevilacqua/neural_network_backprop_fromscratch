@@ -10,9 +10,8 @@ I git this soft because I add some features proposed by Jason Bronwlee in the "E
 As k = 5, 5 models are fit and evaluated on 5 different hold out sets. Each model is trained for 500 epochs.<br>
 Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1) by the code.<br>
 The training process uses online gradient descent. The batch learning will soon be implemented.<br><br>
-
-One hidden layer of 5 neurons and one output layer are created to init a network. (No layer for inputs).<br>
+One hidden layer of 5 neurons and one output layer of 3 neurons are created to init a network. (No layer for inputs).<br>
 *Note: Hidden layers could be added thanks to the custom init network function.*<br>
-The number of outputs is computed according to the number of class found in the dataset.<br>
+The number of neuron outputs is computed according to the number of class found in the dataset.<br>
 They are translated into one-hot encoding to match the network outputs.<br>
 Thanks to this, the error can be computed beetween expected outputs and predicted outputs.
