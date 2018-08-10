@@ -38,7 +38,7 @@ Compute output from a neural network by propagating input signals.
 #### Backpropagation
 Supervised method (gradient descent) to train networks, see the tuto above-mentioned for more details.
 
-#### Train a network
+#### Training a network
 Update weights in a neural network to improve its predictions according to a dataset. Here, the steps in our case:<br>
 Loop while not trained enough:
 1. foward propagation
