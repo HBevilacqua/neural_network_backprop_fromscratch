@@ -3,7 +3,7 @@
 The initial software is provided by the amazing tutorial "*How to Implement the Backpropagation Algorithm From Scratch In Python*" by Jason Brownlee.<br>
 https://machinelearningmastery.com/implement-backpropagation-algorithm-scratch-python/
 
-If you find my repository, I advise you to follow this tuto which outlines each step before reading my code:<br>
+Before reading my code, I advise you to follow this tuto which outlines each step:<br>
 - Initialize Network
 - Forward Propagate
 - Back Propagate Error
@@ -27,7 +27,7 @@ Thanks to this, the error can be computed beetween expected outputs and predicte
 ## Glossary
 
 #### MLP - Multilayer perceptron
-a type of feedforward artificial neural network.
+A type of feedforward artificial neural network.
 
 #### Feedfoward neural network
 Neural network whitout cycle between neurons (ex: no connection between layer N and layer N-2).
@@ -39,12 +39,14 @@ Compute output from a neural network by propagating input signals.
 Supervised method (gradient descent) to train networks, see the tuto above-mentioned for more details.
 
 #### Training a network
-Update weights in a neural network to improve its predictions according to a dataset. Here, the steps in our case:<br>
-Loop while not trained enough:
-1. foward propagation
-2. back propagation
-3. updating weights
-
+Update weights in a neural network to improve its predictions according to a dataset. Here, the online learning steps:<br>
+<pre>
+For each epoch
+     For each train pattern
+          Foward propagation (update the outputs: 'output')
+          Back propagation (update the errors for each neuron: 'delta')
+          Updating weights (update the weight according tot the errors: 'weights')
+</pre>
 #### Dataset
 Data used to train and test the network.
 
