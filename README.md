@@ -17,7 +17,7 @@ I git this soft because I add some features proposed by Jason Bronwlee in the "E
 *bacpropagation.py* implements a multilayer perceptron (MLP). This feedfoward network is trained and tested using k-fold cross-validation on *seeds_dataset.csv* dataset.<br>
 As k = 5, 5 models are fit and evaluated on 5 different hold out sets. Each model is trained for 500 epochs.<br>
 Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1) by the code.<br>
-The training process uses online gradient descent. The batch learning will soon be implemented.<br><br>
+The training process uses Stochastic Gradient Descent (SGD, called online machine learning algorith as well). The batch learning will soon be implemented.<br><br>
 One hidden layer of 5 neurons and one output layer of 3 neurons are created to init a network. (No layer for inputs).<br>
 *Note: Hidden layers could be added thanks to the custom init network function.*<br>
 The number of neuron outputs is computed according to the number of class found in the dataset.<br>
@@ -39,7 +39,7 @@ Compute output from a neural network by propagating input signals.
 Supervised method (gradient descent) to train networks, see the tuto above-mentioned for more details.
 
 #### Training a network
-Update weights in a neural network to improve its predictions according to a dataset. Here, the online learning steps:<br>
+Update weights in a neural network to improve its predictions according to a dataset. Here, the SGD steps:<br>
 <pre>
 For each epoch
      For each train pattern
@@ -62,6 +62,9 @@ Sequence:
      C. Fit a model on the training set and evaluate it on the test set<br>
      D. Retain the evaluation score and discard the model<br>
 4. Summarize the skill of the model using the sample of model evaluation scores
+
+### Epoch
+One epoch = One cycle (foward + backward) through the entire training dataset (all the rows "inputs/outputs" seen).
 
 #### One-hot encoding
 A new unic binary variable is added for each integer value:<br>
