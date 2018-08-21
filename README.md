@@ -3,7 +3,7 @@
 The initial software is provided by the amazing tutorial "*How to Implement the Backpropagation Algorithm From Scratch In Python*" by Jason Brownlee.<br>
 https://machinelearningmastery.com/implement-backpropagation-algorithm-scratch-python/
 
-Before reading my code, I advise you to follow this tuto which outlines each step:<br>
+You should read this tuto which outlines the following steps:<br>
 - Initialize Network
 - Forward Propagate
 - Back Propagate Error
@@ -15,8 +15,8 @@ I git this soft because I add some features proposed by Jason Bronwlee in the "E
 
 ## About the neural network training used
 *bacpropagation.py* implements a multilayer perceptron (MLP). This feedfoward network is trained and tested using k-fold cross-validation on *seeds_dataset.csv* dataset.<br>
-As k = 5, 5 models are fit and evaluated on 5 different hold out sets. Each model is trained for 500 epochs.<br>
-Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1) by the code.<br>
+As k = 5, five models are fitted and evaluated on 5 different hold out sets. Each model is trained for 500 epochs.<br>
+Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1).<br>
 The training process uses Stochastic Gradient Descent (SGD, called online machine learning algorith as well). The batch learning will soon be implemented.<br><br>
 One hidden layer of 5 neurons and one output layer of 3 neurons are created to init a network. (No layer for inputs).<br>
 *Note: Hidden layers could be added thanks to the custom init network function.*<br>
@@ -30,7 +30,7 @@ Thanks to this, the error can be computed beetween expected outputs and predicte
 A type of feedforward artificial neural network.
 
 #### Feedfoward neural network
-Neural network whitout cycle between neurons (ex: no connection between layer N and layer N-2).
+Neural network without cycle between neurons (ex: no connection between layer N and layer N-2).
 
 #### Feedfoward propagation
 Compute output from a neural network by propagating input signals.
