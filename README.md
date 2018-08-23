@@ -5,8 +5,8 @@ https://machinelearningmastery.com/implement-backpropagation-algorithm-scratch-p
 
 You should read this tuto which outlines the following steps:<br>
 - Initialize Network
-- Forward Propagate
-- Back Propagate Error
+- Forward Propagation
+- Backpropagation
 - Train Network
 - Predict
 - Seeds Dataset Case Study
