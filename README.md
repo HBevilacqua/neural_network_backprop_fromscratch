@@ -17,7 +17,7 @@ I git this soft to sum up what I've learned and add some features proposed by Ja
 *bacpropagation.py* implements a multilayer perceptron (MLP). This feedfoward network is trained and tested using k-fold cross-validation on *seeds_dataset.csv* dataset.<br>
 As k = 5, five models are fitted and evaluated on 5 different hold out sets. Each model is trained for 500 epochs.<br>
 Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1).<br>
-The training process uses Stochastic Gradient Descent (SGD, called online machine learning algorith as well). The batch learning will soon be implemented.<br><br>
+The training process uses Stochastic Gradient Descent (SGD, called online machine learning algorithm as well). The batch learning will soon be implemented.<br><br>
 One hidden layer of 5 neurons and one output layer of 3 neurons are created to init a network. (No layer for inputs).<br>
 *Note: Hidden layers could be added thanks to the custom init network function.*<br>
 The number of neuron outputs is computed according to the number of class found in the dataset.<br>
