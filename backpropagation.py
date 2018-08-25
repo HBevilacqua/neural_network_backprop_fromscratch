@@ -136,7 +136,6 @@ def backward_propagate_error(network, expected, transfer):
 # input:	(l_rate)learning rate controls how much to change the weight to correct for the error.
 #			For example, a value of 0.1 will update the weight 10% of the amount that it possibly could be updated.
 def update_weights(network, row, l_rate):
-        #For each layer (no iteration for the input layer)
 	for idx_layer in range(len(network)):
 		inputs = row[:-1]
 		if idx_layer != 0:
@@ -156,8 +155,9 @@ def update_weights(network, row, l_rate):
 #			For example, a value of 0.1 will update the weight 10% of the amount that it possibly could be updated.
 # input:	(n_epoch)Within each epoch, update the network for each row in the training dataset
 # input:	(n_outputs)Expected of output values
-def train_network(network, train, l_rate, n_epoch, n_outputs, transfer):
+def train_network(network, train, test, l_rate, n_epoch, n_outputs, transfer):
         error=[]
+        accuracy=[]
 	for epoch in range(n_epoch):
 		sum_error = 0
                 # Apply for each row of the dataset the backprop 
@@ -172,21 +172,23 @@ def train_network(network, train, l_rate, n_epoch, n_outputs, transfer):
 			backward_propagate_error(network, expected, transfer)
 			update_weights(network, row, l_rate)
                 error.append(sum_error)
-		####print("")
-                ####print('>--- epoch=%d, lrate=%.3f, error=%.3f' % (epoch, l_rate, sum_error))
-                ####for neuron in network[-1]:
-                ####    print(neuron['output'])
-                ####print("expected values",expected)
-        ####plt.plot(error)
-        ####plt.ylabel('Sum(error)^2 before backprop')
-        ####plt.xlabel('Train pattern idx')
-        ####plt.show()
+                accuracy.append(get_prediction_accuracy(network, test, transfer))
+        accuracies.append(accuracy)
 
 # Make a prediction with a network
 def predict(network, row, transfer):
 	outputs = forward_propagate(network, row, transfer)
         #return the index with max value for each output (ex: output[i]=[0.1, 0.9, 0.2], prediciont[i] = 1)
 	return outputs.index(max(outputs))
+
+def get_prediction_accuracy(network, train, transfer):
+    predictions = list()
+    for row in train:
+        prediction = predict(network, row, transfer)
+        predictions.append(prediction)
+    expected_out = [row[-1] for row in train]
+    accuracy = accuracy_metric(expected_out, predictions)
+    return accuracy
 
 # Backpropagation Algorithm With Stochastic Gradient Descent
 # input:	(train)inputs to train the network
@@ -203,7 +205,7 @@ def back_propagation(train, test, l_rate, n_epoch, n_hidden, transfer):
         for i in range(len(network)):
             layerPrint.append(len(network[i]))
         print('network created: %d layer(s):' % len(network), layerPrint)
-	train_network(network, train, l_rate, n_epoch, n_outputs, transfer)
+	train_network(network, train, test, l_rate, n_epoch, n_outputs, transfer)
 	predictions = list()
         print ("perform predictions on %d set of inputs:" % len(test))
 	for row in test:
@@ -293,9 +295,10 @@ def evaluate_algorithm(dataset, algorithm, n_folds, *args):
 			test_set.append(row_copy)
 			row_copy[-1] = None
                 #--- (3) create network + train it + return its predictions 
-		predicted = algorithm(train_set, test_set, *args)
+		predicted = algorithm(train_set, fold, *args)
                 #--- (4) compare each prediction with the corresponding expected output in dataset
 		actual = [row[-1] for row in fold]
+                print(actual)
 		accuracy = accuracy_metric(actual, predicted)
 		scores.append(accuracy)
                 print('- Training[%d] performed' % len(scores))
@@ -356,6 +359,8 @@ for row in dataset:
 """
 seed(1)
 
+accuracies = list()
+
 filename = 'seeds_dataset.csv'
 dataset = load_csv(filename)
 # convert string numbers to floats
@@ -377,4 +382,12 @@ print('---------------------------------------')
 scores = evaluate_algorithm(dataset, back_propagation, n_folds, l_rate, n_epoch, n_hidden, transfer_sigmoid)
 print('Scores (per fold): %s' % scores)
 print('Mean Accuracy: %.3f%%' % (sum(scores)/float(len(scores))))
+subplot = ((n_folds / 2) + (n_folds % 2))*100 + 21
+for i in range(len(accuracies)):
+    plt.subplot(subplot+i)
+    plt.plot(accuracies[i])
+    plt.grid(True)
+    plt.ylabel('Accuracy (%)')
+    plt.xlabel('epoch number')
+plt.show()
 
