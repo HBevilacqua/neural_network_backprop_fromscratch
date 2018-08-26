@@ -36,13 +36,20 @@ A type of feedforward artificial neural network.
 Neural network without cycle between neurons (ex: no connection between layer N and layer N-2).
 
 #### Feedfoward propagation
-Compute output from a neural network by propagating input signals.
+Computes output from a neural network by propagating input signals.
+
+#### Gardient
+The gradient (∇f) of a scalar-valued multivariable function f(x,y,…) gathers all its partial derivatives (
+∂f/∂x, ∂f/∂Y, ...) into a vector.
+
+#### Gardient descent 
+It is a first order optmization algorithm to fing the minimum of a function, generally used in ML when it is not possible to find the solutions of the equation ∂L(θ)/∂θ = 0, I mean all θ that min L(θ).
 
 #### Backpropagation
 Supervised method (gradient descent) to train networks, see the tuto above-mentioned for more details.
 
 #### Training a network
-Update weights in a neural network to improve its predictions according to a dataset. Here, the SGD steps:<br>
+Updates weights in a neural network to improve its predictions according to a dataset. Here, the SGD steps:<br>
 <pre>
 For each epoch
      For each train pattern
@@ -66,7 +73,7 @@ Sequence:
      D. Retain the evaluation score and discard the model<br>
 4. Summarize the skill of the model using the sample of model evaluation scores
 
-### Epoch
+#### Epoch
 One epoch = One cycle (foward + backward) through the entire training dataset (all the rows "inputs/outputs" seen).
 
 #### One-hot encoding
