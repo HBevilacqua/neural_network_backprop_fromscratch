@@ -11,7 +11,10 @@ You should read this tuto which outlines the following steps:<br>
 - Predict
 - Seeds Dataset Case Study
 
-I git this soft to sum up what I've learned and add some features proposed by Jason Bronwlee in the "Extensions" part of his tutorial.
+I git this soft to sum up what I've learned and add some features proposed by Jason Bronwlee in the "Extensions" part of his tutorial.<br>
+
+To understand backpropagation calculations through a concrete example, take a look at *"A Step by Step Backpropagation Example*" by Matt Mazur:<br>
+https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/
 
 ## About the neural network training used
 *bacpropagation.py* implements a multilayer perceptron (MLP). This feedfoward network is trained and tested using k-fold cross-validation on *seeds_dataset.csv* dataset.<br>
