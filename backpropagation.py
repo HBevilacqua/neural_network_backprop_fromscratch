@@ -148,6 +148,14 @@ def update_weights(network, row, l_rate):
                         #--- (3) Update the bias of the neuron (input=1 below)
 			neuron['weights'][-1] += l_rate * neuron['delta'] * 1
 
+# expected = one-hot encoding, one class for one output (one output = unic binary value)
+# if 2 classes (2 integer out values), expected = [0, 1] and = [1, 0]
+# write '1' at the index given by the integer output (if output = 2, set at the index 2: [0,0,1] )
+def one_hot_encoding(n_outputs, row_in_dataset):
+    expected = [0 for i in range(n_outputs)]
+    expected[row_in_dataset[-1]] = 1
+    return expected
+
 # Train a network for a fixed number of epochs, it is updated using stochastic gradient descent.
 # input:	(network)Our neural network
 # input:	(train)Dataset to train the neural network (train patterns)
@@ -163,11 +171,7 @@ def train_network(network, train, test, l_rate, n_epoch, n_outputs, transfer):
                 # Apply for each row of the dataset the backprop 
 		for row in train:
 			outputs = forward_propagate(network, row, transfer)
-                        # expected = one-hot encoding, 1 class (1 binary) for 1 input
-                        # if 2 classes (2 integer out values), expected = [0, 1] and = [1, 0]
-                        # write '1' at the index given by the integer output (if output = 2, set at the index 2: [0,0,1] )
-			expected = [0 for i in range(n_outputs)]
-			expected[row[-1]] = 1
+                        expected = one_hot_encoding(n_outputs, row)
 			sum_error += sum([(expected[i]-outputs[i])**2 for i in range(len(expected))])
 			backward_propagate_error(network, expected, transfer)
 			update_weights(network, row, l_rate)
