@@ -55,7 +55,7 @@ def initialize_network_custom(tab):
 
 # Calculate neuron activation for an input: activation = sum(weight_i * input_i) + bias
 # input:	(weights)weight array on 1 neuron
-# input:	(inputs)neuron input (indexes are alligned with weight array)
+# input:	(inputs)neuron inputs (indexes are alligned with weight array)
 # retrun:	(activation)current neuron value after applying activation (without transfer fct)
 def activate(weights, inputs):
         #Add the bias weight (last index)
@@ -81,10 +81,10 @@ def transfer_tanh(x, derivate):
     else:
         return 1.0 - tanh(x)**2
 
-# Forward propagate input to a network output, row is the row of the dataset array
+# Forward propagate input to a network output
 # input:	(network)Our neural network
-# input:	(row)The dataset to train our network (1 train pattern)
-# return	the outputs from the last layer also called the output layer.
+# input:	(row)1 train pattern
+# return	the outputs of the last layer.
 def forward_propagate(network, row, transfer):
         #first input is set by the dataset array
 	inputs = row
@@ -100,10 +100,7 @@ def forward_propagate(network, row, transfer):
         #returns the outputs from the last layer
 	return inputs
 
-# Backpropagate error and store in neurons
-# Error signal calculated for each neuron is stored with the name delta
-# input		(network)Our neural network
-# input		(exptected)Expected output of our network
+# Backpropagate error and store it into delta of neurons
 def backward_propagate_error(network, expected, transfer):
         #Start from last layer
 	for idx_layer in reversed(range(len(network))):
@@ -132,7 +129,7 @@ def backward_propagate_error(network, expected, transfer):
 # Update network weights with error: weight += (learning_rate * error * input)
 # Note: forward and backward propagations must be already done.
 # input		(network)Our neural network
-# input		(row)the dataset to train our network (1 train pattern)
+# input		(row)1 train pattern
 # input:	(l_rate)learning rate controls how much to change the weight to correct for the error.
 #			For example, a value of 0.1 will update the weight 10% of the amount that it possibly could be updated.
 def update_weights(network, row, l_rate):
@@ -158,13 +155,12 @@ def one_hot_encoding(n_outputs, row_in_dataset):
 
 # Train a network for a fixed number of epochs, it is updated using stochastic gradient descent.
 # input:	(network)Our neural network
-# input:	(train)Dataset to train the neural network (train patterns)
+# input:	(train)Dataset to train the neural network
 # input:	(l_rate)learning rate controls how much to change the weight to correct for the error.
 #			For example, a value of 0.1 will update the weight 10% of the amount that it possibly could be updated.
 # input:	(n_epoch)Within each epoch, update the network for each row in the training dataset
-# input:	(n_outputs)Expected of output values
+# input:	(n_outputs)
 def train_network(network, train, test, l_rate, n_epoch, n_outputs, transfer):
-        error=[]
         accuracy=[]
 	for epoch in range(n_epoch):
 		sum_error = 0
@@ -175,7 +171,6 @@ def train_network(network, train, test, l_rate, n_epoch, n_outputs, transfer):
 			sum_error += sum([(expected[i]-outputs[i])**2 for i in range(len(expected))])
 			backward_propagate_error(network, expected, transfer)
 			update_weights(network, row, l_rate)
-                error.append(sum_error)
                 accuracy.append(get_prediction_accuracy(network, test, transfer))
         accuracies.append(accuracy)
 
@@ -195,11 +190,6 @@ def get_prediction_accuracy(network, train, transfer):
     return accuracy
 
 # Backpropagation Algorithm With Stochastic Gradient Descent
-# input:	(train)inputs to train the network
-# input:	(test)inputs to make prediction
-# input:	(l_rate)
-# input:	(n_epoch)
-# input:	(n_hidden)
 def back_propagation(train, test, l_rate, n_epoch, n_hidden, transfer):
 	n_inputs = len(train[0]) - 1
 	n_outputs = len(set([row[-1] for row in train]))
