@@ -43,7 +43,7 @@ The gradient (∇f) of a scalar-valued multivariable function f(x,y,…) gathers
 ∂f/∂x, ∂f/∂Y, ...) into a vector.
 
 #### Gardient descent 
-It is a first order optmization algorithm to fing the minimum of a function, generally used in ML when it is not possible to find the solutions of the equation ∂J(θ)/∂θ = 0, I mean all θ that min L(θ).
+It is a first order optmization algorithm to fing the minimum of a function, generally used in ML when it is not possible to find the solutions of the equation ∂J(θ)/∂θ = 0, I mean all θ that min J(θ).
 
 #### Regression
 Regression tries to predict outputs of a function according to its inputs (= find the relationship between Y and X).
