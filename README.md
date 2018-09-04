@@ -17,7 +17,7 @@ To understand backpropagation calculations through a concrete example, take a lo
 https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/
 
 ## About the neural network training used
-*bacpropagation.py* implements a multilayer perceptron (MLP). This feedfoward network is trained and tested using k-fold cross-validation on *seeds_dataset.csv* dataset.<br>
+*bacpropagation.py* implements a multilayer feed foward neural network. This network is trained and tested using k-fold cross-validation on *seeds_dataset.csv* dataset.<br>
 As k = 5, five models are fitted and evaluated on 5 different hold out sets. Each model is trained for 500 epochs.<br>
 Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1).<br>
 The training process uses Stochastic Gradient Descent (SGD, called online machine learning algorithm as well). The batch learning will soon be implemented.<br><br>
@@ -28,9 +28,6 @@ They are translated into one-hot encoding to match the network outputs.<br>
 Thanks to this, the error can be computed beetween expected outputs and predicted outputs.
 
 ## Glossary
-
-#### MLP - Multilayer perceptron
-A type of feedforward artificial neural network.
 
 #### Feedfoward neural network
 Neural network without cycle between neurons (ex: no connection between layer N and layer N-2).
