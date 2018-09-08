@@ -16,11 +16,8 @@ I git this soft to sum up what I've learned and add some features proposed by Ja
 To understand backpropagation calculations through a concrete example, take a look at *"A Step by Step Backpropagation Example*" by Matt Mazur:<br>
 https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/
 
-## About the neural network training used
-*bacpropagation.py* implements a multilayer feed foward neural network. This network is trained and tested using k-fold cross-validation on *seeds_dataset.csv* dataset.<br>
-As k = 5, five models are fitted and evaluated on 5 different hold out sets. Each model is trained for 500 epochs.<br>
-Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1).<br>
-The training process uses Stochastic Gradient Descent (SGD, called online machine learning algorithm as well). The batch learning will soon be implemented.<br><br>
+<br>
+*bacpropagation.py* implements a multilayer feed foward neural network.
 
 ## About the architecture of our neural network
 #### Input layer
@@ -34,7 +31,13 @@ The sigmoid or tanh activation functions are available. It is a parameter of eva
 #### Output layer
 They are three neurons. The number of output neurons is defined by the number of classes found in the dataset outputs. (Here, we are trying to solve a classification problem.) <br>
 In classification problems, best results are achieved when the network has one neuron in the output layer for each class value.<br>
-The output values are translated into one-hot encoding to match the network outputs.<br>
+The output values are translated into one-hot encoding to match the network outputs.<br><br>
+
+## About the learning (lost function and optimization algorithm)
+The training process uses Stochastic Gradient Descent (SGD, called online machine learning algorithm as well).<br>
+This network is trained and tested using k-fold cross-validation on *seeds_dataset.csv* dataset.<br>
+As k = 5, five models are fitted and evaluated on 5 different hold out sets. Each model is trained for 500 epochs.<br>
+Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1).<br>
 
 ## Glossary
 
@@ -49,7 +52,7 @@ The gradient (∇f) of a scalar-valued multivariable function f(x,y,…) gathers
 ∂f/∂x, ∂f/∂Y, ...) into a vector.
 
 #### Gardient descent 
-It is a first order optmization algorithm to fing the minimum of a function, generally used in ML when it is not possible to find the solutions of the equation ∂J(θ)/∂θ = 0, I mean all θ that min J(θ).
+It is a first order optmization algorithm to fing the minimum of a function, generally used in ML when it is not possible to find the solutions of the equation ∂J(θ)/∂θ = 0 (J is the cost function), i.e. all θ which minimize J(θ).
 
 #### Regression
 Regression tries to predict outputs of a function according to its inputs (= find the relationship between Y and X).
