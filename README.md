@@ -17,7 +17,7 @@ To understand backpropagation calculations through a concrete example, take a lo
 https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/
 
 <br>
-*bacpropagation.py* implements a multilayer feed foward neural network.
+*bacpropagation.py* implements a **multilayer feed foward neural network**.
 
 ## About the architecture of our neural network
 #### Input layer
@@ -26,19 +26,22 @@ There is no activation function because we want to get the characteristics of th
 #### Hidden layer
 Five neurons are defined.<br>
 *Note: Hidden layers could be added thanks to the custom init network function (cf. initialize_network_custom(tab)).*<br>
-The sigmoid or tanh activation functions are available. It is a parameter of evaluate_algorithm() function.
+The **sigmoid** or **tanh** activation functions are available as a parameter of the evaluate_algorithm() function.
 
 #### Output layer
 They are three neurons. The number of output neurons is defined by the number of classes found in the dataset outputs. (Here, we are trying to solve a classification problem.) <br>
 In classification problems, best results are achieved when the network has one neuron in the output layer for each class value.<br>
-The output values are translated into one-hot encoding to match the network outputs.<br><br>
+The output values are translated into **one-hot encoding** to match the network outputs.<br>
+Our ouput layer uses the same activation function that the hidden layer (sigmoid or tanh).<br>
+To **predict** the class which has the largest probability for one input vector, we are using the **arg max function**.<br><br>
 
 ## About the learning (lost function and optimization algorithm)
-The training process uses Stochastic Gradient Descent (SGD, called online machine learning algorithm as well).<br>
-This network is trained and tested using k-fold cross-validation on *seeds_dataset.csv* dataset.<br>
-As k = 5, five models are fitted and evaluated on 5 different hold out sets. Each model is trained for 500 epochs.<br>
+The training process uses **Stochastic Gradient Descent** (SGD, called online machine learning algorithm as well).<br>
+This network is trained and tested using **k-fold cross-validation** on *seeds_dataset.csv* dataset.<br>
+As k = 5, five models are fitted and evaluated on 5 different hold out sets. Each model is trained for **500 epochs**.<br>
 Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1).<br>
 
+<br>
 ## Glossary
 
 #### Feedfoward neural network
@@ -54,14 +57,14 @@ The gradient (∇f) of a scalar-valued multivariable function f(x,y,…) gathers
 #### Gardient descent 
 It is a first order optmization algorithm to fing the minimum of a function, generally used in ML when it is not possible to find the solutions of the equation ∂J(θ)/∂θ = 0 (J is the cost function), i.e. all θ which minimize J(θ).
 
-#### Regression
-Regression tries to predict outputs of a function according to its inputs (= find the relationship between Y and X).
-
 #### Classification (in ML)
 Classification aims to predict a label. The outputs are class labels.
 
 #### Regression (in ML)
 Regression aims to predict a quantity. The outputs are continuous.
+
+#### Regression
+Regression tries to predict outputs of a function according to its inputs (= find the relationship between Y and X).
 
 #### Linear regression
 Linear regression is a linear model, e.g. a model that assumes a linear relationship between the input variables (x) and the single output variable (y).
@@ -80,6 +83,10 @@ For each epoch
 </pre>
 #### Dataset
 Data used to train and test the network.
+
+#### Arg max
+The argument of the maxima refers to the inputs where a function output values are the highest.<br>
+(e.g. fox x ∈ [0,π], the *arg max* of sin(x) is x = π/2 and the *max* of sin(x) is sin(x) = 1.
 
 #### k-cross validation
 It is a procedure used to estimate the skill of the model on new data.<br>
