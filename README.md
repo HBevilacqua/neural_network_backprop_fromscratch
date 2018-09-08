@@ -21,11 +21,20 @@ https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/
 As k = 5, five models are fitted and evaluated on 5 different hold out sets. Each model is trained for 500 epochs.<br>
 Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1).<br>
 The training process uses Stochastic Gradient Descent (SGD, called online machine learning algorithm as well). The batch learning will soon be implemented.<br><br>
-One hidden layer of 5 neurons and one output layer of 3 neurons are created to init a network. (No layer for inputs).<br>
-*Note: Hidden layers could be added thanks to the custom init network function.*<br>
-The number of neuron outputs is computed according to the number of class found in the dataset.<br>
-They are translated into one-hot encoding to match the network outputs.<br>
-Thanks to this, the error can be computed beetween expected outputs and predicted outputs.
+
+## About the architecture of our neural network
+#### Input layer
+There is no activation function because we want to get the characteristics of the raw input vector.
+
+#### Hidden layer
+Five neurons are defined.<br>
+*Note: Hidden layers could be added thanks to the custom init network function (cf. initialize_network_custom(tab)).*<br>
+The sigmoid or tanh activation functions are available. It is a parameter of evaluate_algorithm() function.
+
+#### Output layer
+They are three neurons. The number of output neurons is defined by the number of classes found in the dataset outputs. (Here, we are trying to solve a classification problem.) <br>
+In classification problems, best results are achieved when the network has one neuron in the output layer for each class value.<br>
+The output values are translated into one-hot encoding to match the network outputs.<br>
 
 ## Glossary
 
@@ -44,6 +53,12 @@ It is a first order optmization algorithm to fing the minimum of a function, gen
 
 #### Regression
 Regression tries to predict outputs of a function according to its inputs (= find the relationship between Y and X).
+
+#### Classification (in ML)
+Classification aims to predict a label. The outputs are class labels.
+
+#### Regression (in ML)
+Regression aims to predict a quantity. The outputs are continuous.
 
 #### Linear regression
 Linear regression is a linear model, e.g. a model that assumes a linear relationship between the input variables (x) and the single output variable (y).
