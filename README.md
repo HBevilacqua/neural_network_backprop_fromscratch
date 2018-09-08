@@ -39,10 +39,9 @@ To **predict** the class which has the largest probability for one input vector,
 The training process uses **Stochastic Gradient Descent** (SGD, called online machine learning algorithm as well).<br>
 This network is trained and tested using **k-fold cross-validation** on *seeds_dataset.csv* dataset.<br>
 As k = 5, five models are fitted and evaluated on 5 different hold out sets. Each model is trained for **500 epochs**.<br>
-Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1).<br>
+Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1).<br><br>
 
-<br>
-## Glossary
+### Glossary
 
 #### Feedfoward neural network
 Neural network without cycle between neurons (ex: no connection between layer N and layer N-2).
