@@ -35,8 +35,9 @@ The output values are translated into **one-hot encoding** to match the network 
 Our ouput layer uses the same activation function that the hidden layer (sigmoid or tanh).<br>
 To **predict** the class which has the largest probability for one input vector, we are using the **arg max function**.<br><br>
 
-## About the learning (lost function and optimization algorithm)
-The training process uses **Stochastic Gradient Descent** (SGD, called online machine learning algorithm as well).<br>
+## About the training (cost function and optimization algorithm)
+The training process uses **Stochastic Gradient Descent** optimization algorithm. (SGD, called online machine learning algorithm as well).<br>
+Note: The optimization is the mechanism which adjusts the weights to increase the accuracy of the predictions.<br>
 This network is trained and tested using **k-fold cross-validation** on *seeds_dataset.csv* dataset.<br>
 As k = 5, five models are fitted and evaluated on 5 different hold out sets. Each model is trained for **500 epochs**.<br>
 Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1).<br><br>
@@ -55,6 +56,14 @@ The gradient (∇f) of a scalar-valued multivariable function f(x,y,…) gathers
 
 #### Gardient descent 
 It is a first order optmization algorithm to fing the minimum of a function, generally used in ML when it is not possible to find the solutions of the equation ∂J(θ)/∂θ = 0 (J is the cost function), i.e. all θ which minimize J(θ).
+
+#### Loss function
+Error for a single training sample.
+Suqare loss: L(yi,yi) = (ŷi - yi)^2 where ŷi = f(θ,b,xi) is the predicted output for the xi input.
+
+#### Cost function
+Error fot the entire training set.
+Mean Squared Error: MSE(θ) = J(θ) = 1/N * ∑i=(1..N) (Ŷi - Yi)^2
 
 #### Classification (in ML)
 Classification aims to predict a label. The outputs are class labels.
