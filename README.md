@@ -40,6 +40,7 @@ The training process uses **Stochastic Gradient Descent** optimization algorithm
 Note: The optimization is the mechanism which adjusts the weights to increase the accuracy of the predictions.<br>
 This network is trained and tested using **k-fold cross-validation** on *seeds_dataset.csv* dataset.<br>
 As k = 5, five models are fitted and evaluated on 5 different hold out sets. Each model is trained for **500 epochs**.<br>
+The sum squared error between the expected output and the network output is accumulated each epoch.<br>
 Dataset stands for wheat seeds. These inputs are normalized to the range (0, 1).<br><br>
 
 ### Glossary
