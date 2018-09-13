@@ -56,14 +56,16 @@ The gradient (∇f) of a scalar-valued multivariable function f(x,y,…) gathers
 ∂f/∂x, ∂f/∂Y, ...) into a vector.
 
 #### Gardient descent 
-It is a first order optmization algorithm to fing the minimum of a function, generally used in ML when it is not possible to find the solutions of the equation ∂J(θ)/∂θ = 0 (J is the cost function), i.e. all θ which minimize J(θ).
+It is a first order optmization algorithm to fing the minimum of a function, generally used in ML when it is not possible to find the solutions of the equation ∂J(θ)/∂θ = 0 (J is the cost function), i.e. all θ which minimize J(θ).<br>
+In this ML example, the gradient descent will find a local minium according to the initial random weights allocated at the neural network initialization. The negative gradient computation shows us in which direction we have to update the weights.<br>
+The GD is computed for each iteration by using: θ := θ - η.∇J(θ) (where η is the learning rate)/
 
 #### Loss function
 Error for a single training sample.
-Suqare loss: L(yi,yi) = (ŷi - yi)^2 where ŷi = f(θ,b,xi) is the predicted output for the xi input.
+Square loss: L(ŷi,yi) = (ŷi - yi)^2 where ŷi = f(θ,b,xi) is the predicted output for the xi input.
 
 #### Cost function
-Error fot the entire training set.
+Error for the entire training set.
 Mean Squared Error: MSE(θ) = J(θ) = 1/N * ∑i=(1..N) (Ŷi - Yi)^2
 
 #### Classification (in ML)
