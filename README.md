@@ -60,11 +60,9 @@ It is a first order optimization algorithm to find the minimum of a function, ge
 In this ML example, the gradient descent will find a local minimum according to the initial random weights allocated at the neural network initialization. The negative gradient computation shows us in which direction we have to update the weights.<br>
 The GD is computed for each iteration by using: θ := θ - η.∇J(θ) (where η is the learning rate).
 
-#### Loss function
+#### Loss function or Cost function
 Error for a single training sample.
-Square loss: L(ŷi,yi) = (ŷi - yi)^2 where ŷi = f(θ,b,xi) is the predicted output for the xi input.
-
-#### Cost function
+Square loss: J(ŷi,yi) = (ŷi - yi)^2 where ŷi = f(θ,b,xi) is the predicted output for the xi input.
 Error for the entire training set.
 Mean Squared Error: MSE(θ) = J(θ) = 1/N * ∑i=(1..N) (Ŷi - Yi)^2
 
